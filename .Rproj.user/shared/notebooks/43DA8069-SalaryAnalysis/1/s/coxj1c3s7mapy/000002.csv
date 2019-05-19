@@ -1,0 +1,11 @@
+"0","education103N1<-data.frame(Job=education103$大職業別,"
+"0","                         Salary_College=education103$`大學-薪資`,stringsAsFactors = F) "
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","education106N1<-data.frame(Job=education106$大職業別,"
+"0","                         Salary_College=education106$`大學-薪資`,stringsAsFactors = F)"

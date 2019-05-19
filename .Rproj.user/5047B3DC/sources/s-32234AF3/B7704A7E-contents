@@ -3,16 +3,20 @@ library(dplyr)
 library(readr)
 #將指定檔案匯入r
 education103 <- read_csv("~/R/hw1/education103.csv")
+education104 <- read_csv("~/R/hw1/education104.csv")
+education105 <- read_csv("~/R/hw1/education105.csv")
 education106 <- read_csv("~/R/hw1/education106.csv")
 
 #只取出需要用到的欄位(年度、職業類別、"大學"畢業薪資)，為了讀取方便將選取欄位重新命名
 #並為了不讓欄位以Factor之型態儲存，故設定stringsAsFactors = F
-education103<-data.frame(Job=education103$大職業別,Salary_College=education103$`大學-薪資`,stringsAsFactors = F) 
-education106<-data.frame(Job=education106$大職業別,Salary_College=education106$`大學-薪資`,stringsAsFactors = F)
+education103N1<-data.frame(Job=education103$大職業別,
+                         Salary_College=education103$`大學-薪資`,stringsAsFactors = F) 
+education106N1<-data.frame(Job=education106$大職業別,
+                         Salary_College=education106$`大學-薪資`,stringsAsFactors = F)
 
 #透過職業別inner_join，篩選出103與106都有的職業別，故by用Job欄位進行篩選
 #此外，為了讀取方便將選取欄位重新命名
-edu103to106<-inner_join(education103,education106,by="Job")
+edu103to106<-inner_join(education103N1,education106N1,by="Job")
 names(edu103to106)<-c("Job","Salary103_College","Salary106_College")
 
 #將原Dataframe薪資表空值的符號—，轉為NA
@@ -49,6 +53,6 @@ JobType<-strsplit(OverFivePercent$Job,"-")
 for(n in 1:length(JobType)){
   JobType[n]<-JobType[[n]][1]
 }
-sort(table(unlist(JobType)),decreasing = T) 
+sort(table(unlist(JobType)),decreasing = T)
 ##<文字說明結果> 由此統計可得知 用水供應及污染整治業、教育服務業、資訊及通訊傳播業
 ##為主要的薪資漲幅度主要職業別，推測: 因這些產業都需要相對規模專業的知識，故可能為漲幅度之原因

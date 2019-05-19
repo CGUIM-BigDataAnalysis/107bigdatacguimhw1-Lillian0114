@@ -1,0 +1,14 @@
+"0","edu103to106$Salary103_College<-gsub(""—"",""NA"",edu103to106$Salary103_College)"
+"2","Warning message:
+"
+"2","In strsplit(code, ""\n"", fixed = TRUE) :"
+"2","
+ "
+"2"," input string 1 is invalid in this locale
+"
+"0","edu103to106$Salary106_College<-gsub(""—"",""NA"",edu103to106$Salary106_College)"
+"0","edu103to106$Salary103_College<-as.numeric(edu103to106$Salary103_College)"
+"2","NAs introduced by coercion"
+"0","edu103to106$Salary106_College<-as.numeric(edu103to106$Salary106_College)"
+"2","NAs introduced by coercion"
+"0","edu103to106$SalaryIncrease<-edu103to106$Salary106_College/edu103to106$Salary103_College"

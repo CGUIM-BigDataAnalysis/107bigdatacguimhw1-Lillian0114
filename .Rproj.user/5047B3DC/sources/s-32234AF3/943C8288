@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1558245045589.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "943C8288",
+    "lastKnownWriteTime" : 1558162387,
+    "last_content_update" : 1558162387,
+    "path" : "~/R/BigDataCGU/homework1_4.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "43,31",
+        "scrollLine" : "3"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

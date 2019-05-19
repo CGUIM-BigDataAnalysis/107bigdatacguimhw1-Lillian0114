@@ -1,0 +1,2 @@
+"0","edu103to106<-inner_join(education103N1,education106N1,by=""Job"")"
+"0","names(edu103to106)<-c(""Job"",""Salary103_College"",""Salary106_College"")"

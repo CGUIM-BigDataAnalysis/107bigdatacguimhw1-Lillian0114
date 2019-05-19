@@ -9,7 +9,7 @@ B0544203石家安
 
 ### 資料匯入與處理
 
-●  載入packages
+-   載入packages
 
 ``` r
 library(readr)
@@ -32,7 +32,7 @@ library(dplyr)
     ## 
     ##     intersect, setdiff, setequal, union
 
-●  將指定檔案匯入r
+-   將指定檔案匯入r
 
 ``` r
 education103 <- read_csv("~/R/hw1/education103.csv")
@@ -44,6 +44,50 @@ education103 <- read_csv("~/R/hw1/education103.csv")
     ##   大職業別 = col_character(),
     ##   `經常性薪資-薪資` = col_double(),
     ##   `經常性薪資-女/男` = col_double(),
+    ##   `國中及以下-薪資` = col_character(),
+    ##   `國中及以下-女/男` = col_character(),
+    ##   `高中或高職-薪資` = col_character(),
+    ##   `高中或高職-女/男` = col_character(),
+    ##   `專科-薪資` = col_character(),
+    ##   `專科-女/男` = col_character(),
+    ##   `大學-薪資` = col_character(),
+    ##   `大學-女/男` = col_character(),
+    ##   `研究所及以上-薪資` = col_character(),
+    ##   `研究所及以上-女/男` = col_character()
+    ## )
+
+``` r
+education104 <- read_csv("~/R/hw1/education104.csv")
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   年度 = col_double(),
+    ##   大職業別 = col_character(),
+    ##   `經常性薪資-薪資` = col_double(),
+    ##   `經常性薪資-女/男` = col_character(),
+    ##   `國中及以下-薪資` = col_character(),
+    ##   `國中及以下-女/男` = col_character(),
+    ##   `高中或高職-薪資` = col_character(),
+    ##   `高中或高職-女/男` = col_character(),
+    ##   `專科-薪資` = col_character(),
+    ##   `專科-女/男` = col_character(),
+    ##   `大學-薪資` = col_character(),
+    ##   `大學-女/男` = col_character(),
+    ##   `研究所及以上-薪資` = col_character(),
+    ##   `研究所及以上-女/男` = col_character()
+    ## )
+
+``` r
+education105 <- read_csv("~/R/hw1/education105.csv")
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   年度 = col_double(),
+    ##   大職業別 = col_character(),
+    ##   `經常性薪資-薪資` = col_double(),
+    ##   `經常性薪資-女/男` = col_character(),
     ##   `國中及以下-薪資` = col_character(),
     ##   `國中及以下-女/男` = col_character(),
     ##   `高中或高職-薪資` = col_character(),
@@ -78,23 +122,24 @@ education106 <- read_csv("~/R/hw1/education106.csv")
     ##   `研究所及以上-女/男` = col_character()
     ## )
 
-●  只取出需要用到的欄位(年度、職業類別、"大學"畢業薪資)，為了讀取方便將選取欄位重新命名<br/> 	並為了不讓欄位以Factor之型態儲存，故設定stringsAsFactors = F
+-   取出需用到的欄位(*年度、職業類別、"大學"畢業薪資*)，為了讀取方便將選取欄位重新命名<br/> 設定stringsAsFactors = F，以防止欄位以Factor之型態儲存
 
 ``` r
-education103<-data.frame(Job=education103$大職業別,
+education103N1<-data.frame(Job=education103$大職業別,
                          Salary_College=education103$`大學-薪資`,stringsAsFactors = F) 
-education106<-data.frame(Job=education106$大職業別,
+education106N1<-data.frame(Job=education106$大職業別,
                          Salary_College=education106$`大學-薪資`,stringsAsFactors = F)
 ```
 
-●  透過職業別inner\_join，篩選出103與106都有的職業別，故by用Job欄位進行篩選<br/> 此外，為了讀取方便將選取欄位重新命名
+-   透過職業別inner\_join，篩選出103與106都有的職業別，故by用Job欄位進行篩選<br/> 此外，為了讀取方便將選取欄位重新命名
 
 ``` r
-edu103to106<-inner_join(education103,education106,by="Job")
+edu103to106<-inner_join(education103N1,education106N1,by="Job")
 names(edu103to106)<-c("Job","Salary103_College","Salary106_College")
 ```
 
-●  將原Dataframe薪資表空值的符號—，轉為NA<br/> ●  因要新增一欄位比較103與106的畢業薪資，故需將原character型態的兩薪資欄位轉為numeric
+-   將原Dataframe薪資表空值的符號—，轉為NA<br/>
+-   新增一欄位比較103與106的畢業薪資，故需將原character型態的兩薪資欄位轉為numeric
 
 ``` r
 edu103to106$Salary103_College<-gsub("—","NA",edu103to106$Salary103_College)
@@ -106,6 +151,9 @@ edu103to106$SalaryIncrease<-edu103to106$Salary106_College/edu103to106$Salary103_
 ```
 
 ### 106年度薪資較103年度薪資高的職業有哪些?
+
+-   篩選106年薪資較103年度高的職業，故以row做子集，並將提高的職業另外存成HigherWage變數<br/>
+-   列出薪資以大到小提高的順序，並呈現前十名的資料，因此用head函數
 
 ``` r
 HigherWage<-filter(edu103to106,SalaryIncrease>1) 
@@ -125,6 +173,9 @@ knitr::kable(head(HigherWage,10))
 | 67  | 教育服務業-事務支援人員                   |               22334|               24471|        1.095684|
 | 45  | 住宿及餐飲業-技術員及助理專業人員         |               25633|               28009|        1.092693|
 | 77  | 其他服務業-事務支援人員                   |               23863|               26007|        1.089846|
+
+1.  結果得知「其他服務業-技術員及助理專業人員」薪水漲幅最高(共漲幅1.13%)，此外，前10名中「住宿及餐飲業」職業種類薪資漲幅度就佔了兩名(第2、9名)<br/>
+2.  儘管「其他服務業」與「住宿及餐飲業」職業種類薪資有明顯的漲幅度，但於前10名中，從薪水欄 位卻另外得知他們起薪相對較低，如「用水供應及污染整治業」的研究所畢業起薪為31560，但「其他服務業」與「住宿及餐飲業」起薪大概28000，因此推測由於他們起薪相對較低，故薪水漲幅度才會較明顯。
 
 ### 提高超過5%的的職業有哪些?
 
@@ -178,7 +229,13 @@ knitr::kable(OverFivePercent)
 | 7   | 工業部門-專業人員                         |               30215|               31775|        1.051630|
 | 52  | 資訊及通訊傳播業-服務及銷售工作人員       |               25995|               27296|        1.050048|
 
+1.  從表得知薪資有明顯漲幅的職業共有41個，故一共有36個職業並未有明顯之漲幅(另外以nrow(HigherWage)-nrow(OverFivePercent)=36得知)
+
 ### 主要的職業種別是哪些種類呢?
+
+-   使用strsplit取出職業別中"-" 前面的字串，了解是那些職業種類，
+-   將後方的子職業篩選掉，留下主要職業種類別，由於切割完之字串為list型態，故轉乘向量之型態
+-   用table計算次數，並以次數最多至最小排序列出主要職業別
 
 ``` r
 JobType<-strsplit(OverFivePercent$Job,"-")
@@ -207,6 +264,8 @@ knitr::kable( sort(table(unlist(JobType)),decreasing = T) )
 | 製造業               |     1|
 | 醫療保健服務業       |     1|
 
+1.  用水供應及污染整治業、教育服務業、資訊及通訊傳播業為主要的薪資漲幅度主要職業別 <br/>推測: 因這些產業都需要相對規模專業的知識，故可能為漲幅度之原因
+
 男女同工不同酬現況分析
 ----------------------
 
@@ -229,21 +288,112 @@ knitr::kable( sort(table(unlist(JobType)),decreasing = T) )
 
 以106年度的資料來看，哪個職業別念研究所最划算呢 (研究所學歷薪資與大學學歷薪資增加比例最多)?
 
+### 資料處理
+
+-   取需用到的欄位(職業類別、大學畢業薪資、研究所以上畢業薪資)，為讓讀取方便將欄位重新命名<br/>
+-   將原Dataframe薪資表空值的符號—，轉為NA <br/>
+-   新增一欄位比較大學與研究所以上的畢業薪資(研究所薪資 / 大學薪資)，故需將原character型態的兩薪資欄位轉為numeric
+
 ``` r
-#這是R Code Chunk
+GradAndUni<-data.frame(Job=education106$大職業別,CollegeSalary=education106$`大學-薪資`,
+                       GraduateSchoolSalary=education106$`研究所及以上-薪資`,
+                       stringsAsFactors = F) 
+GradAndUni$CollegeSalary<-gsub("—","NA",GradAndUni$CollegeSalary)
+GradAndUni$GraduateSchoolSalary<-gsub("—","NA",GradAndUni$GraduateSchoolSalary)
+GradAndUni$CollegeSalary<-as.numeric(GradAndUni$CollegeSalary)
+GradAndUni$GraduateSchoolSalary<-as.numeric(GradAndUni$GraduateSchoolSalary)
+GradAndUni$IncreaseRate<-GradAndUni$GraduateSchoolSalary/GradAndUni$CollegeSalary
 ```
+
+-   篩選出研究所以上畢業薪資較大學畢業薪資高的職業，故以row做子集，
+-   列出薪資以大到小提高的順序，並呈現前十名的資料，因此用head函數
+
+``` r
+GradAndUni<-filter(GradAndUni,IncreaseRate>1) 
+GradAndUni<-GradAndUni[order(GradAndUni$IncreaseRate,decreasing = T),]
+knitr::kable( head(GradAndUni,10) )
+```
+
+|     | Job                                 |  CollegeSalary|  GraduateSchoolSalary|  IncreaseRate|
+|-----|:------------------------------------|--------------:|---------------------:|-------------:|
+| 12  | 礦業及土石採取業-事務支援人員       |          24815|                 30000|      1.208946|
+| 57  | 專業\_科學及技術服務業              |          29648|                 35666|      1.202982|
+| 79  | 其他服務業-技術員及助理專業人員     |          27929|                 33500|      1.199470|
+| 60  | 專業\_科學及技術服務業-事務支援人員 |          27035|                 32234|      1.192306|
+| 33  | 批發及零售業                        |          27611|                 32910|      1.191916|
+| 13  | 製造業                              |          28155|                 33458|      1.188350|
+| 76  | 藝術\_娛樂及休閒服務業-事務支援人員 |          24970|                 29657|      1.187705|
+| 5   | 工業部門                            |          28263|                 33448|      1.183455|
+| 1   | 工業及服務業部門                    |          28446|                 33633|      1.182346|
+| 29  | 服務業部門                          |          28715|                 33922|      1.181334|
+
+1.  從答案可知從事「礦業及土石採取業-事務支援人員」職業讀研究所是最好的，因相較於大學畢業薪資，研究所畢業後的薪資整整漲幅1.21% <br/>
+2.  此外，「專業\_科學及技術服務業」研究所畢業薪資也漲幅很多(1.20%)，特別是其中的「事務支援人員」職位，薪資也漲幅1.19% <br/>
+3.  然而，儘管「礦業及土石採取業-事務支援人員」薪資漲幅較大，但在前10名中，「礦業及土石採取業-事務支援人員」職業的起薪卻是最低的，故由此可猜測，薪資漲幅度有顯著差異，可能是因為起薪相對較低
 
 我有興趣的職業別薪資狀況分析
 ----------------------------
 
 ### 有興趣的職業別篩選，呈現薪資
 
+-   篩選自己有興趣的職業別:<br/> **資訊及通訊傳播業、專業\_科學及技術服務業、金融及保險業**
+
 ``` r
-#這是R Code Chunk
+Intrested<-filter(GradAndUni,grepl("^資訊及通訊傳播業|^專業_科學及技術服務業|^金融及保險業",Job))
 ```
 
 ### 這些職業別研究所薪資與大學薪資差多少呢？
 
+-   新增兩欄位比較大學與研究所以上的畢業薪資漲幅度(研究所薪資 / 大學薪資)，<br/>以及比較大學與研究所以上的畢業薪資明確之相差金額(研究所薪資 - 大學薪資)，
+-   為呈現相對應的大學畢業薪資與研究所畢業薪資，故將不完整之資料篩選掉
+
 ``` r
-#這是R Code Chunk
+Intrested$GapWithGraAndCol<-Intrested$GraduateSchoolSalary-Intrested$CollegeSalary
+Intrested$IncreaseRate<-Intrested$GraduateSchoolSalary/Intrested$CollegeSalary
+Intrested<-Intrested[complete.cases(Intrested),]
+Intrested<-Intrested[order(Intrested$GraduateSchoolSalary,decreasing = T),]
+knitr::kable(Intrested)
 ```
+
+|     | Job                                         |  CollegeSalary|  GraduateSchoolSalary|  IncreaseRate|  GapWithGraAndCol|
+|-----|:--------------------------------------------|--------------:|---------------------:|-------------:|-----------------:|
+| 9   | 金融及保險業-專業人員                       |          33646|                 38542|      1.145515|              4896|
+| 6   | 專業\_科學及技術服務業-專業人員             |          33384|                 38415|      1.150701|              5031|
+| 5   | 金融及保險業                                |          31597|                 36569|      1.157357|              4972|
+| 7   | 資訊及通訊傳播業-專業人員                   |          31817|                 36545|      1.148600|              4728|
+| 11  | 金融及保險業-技術員及助理專業人員           |          31688|                 35830|      1.130712|              4142|
+| 1   | 專業\_科學及技術服務業                      |          29648|                 35666|      1.202982|              6018|
+| 8   | 金融及保險業-事務支援人員                   |          30771|                 35278|      1.146469|              4507|
+| 4   | 資訊及通訊傳播業                            |          29198|                 33944|      1.162545|              4746|
+| 3   | 專業\_科學及技術服務業-技術員及助理專業人員 |          29016|                 33829|      1.165874|              4813|
+| 12  | 資訊及通訊傳播業-技術員及助理專業人員       |          28902|                 32354|      1.119438|              3452|
+| 2   | 專業\_科學及技術服務業-事務支援人員         |          27035|                 32234|      1.192306|              5199|
+| 10  | 資訊及通訊傳播業-事務支援人員               |          27156|                 30856|      1.136250|              3700|
+
+1.  因對金融及保險業有些興趣，及本身以資訊較為專業，故選取此三種有涉及的產業。<br/>
+2.  由於在尚未看過此表時，決定考關於資訊相關方面之研究所，因除了本身對資訊的興趣，還認為資訊相關之產業為現代社會之主流，故認為資訊產業之薪水會較高
+3.  但從此表得知，有關資訊領域方面之薪水，無論是大學畢業或研究所畢業之薪水並沒有特別高，<br/>然而，多半「金融及保險業」產業薪資意外的高於資訊相關產業，因此，在起薪方面，與原先之想像有些微不同
+4.  故為進一步了解「金融及保險業」職業之大學畢業與研究所畢業之薪水是否有明顯漲幅度，故在進行下列分析
+
+``` r
+RateRank<-Intrested[order(Intrested$IncreaseRate,decreasing = T),]
+knitr::kable(RateRank)
+```
+
+| Job                                         |  CollegeSalary|  GraduateSchoolSalary|  IncreaseRate|  GapWithGraAndCol|
+|:--------------------------------------------|--------------:|---------------------:|-------------:|-----------------:|
+| 專業\_科學及技術服務業                      |          29648|                 35666|      1.202982|              6018|
+| 專業\_科學及技術服務業-事務支援人員         |          27035|                 32234|      1.192306|              5199|
+| 專業\_科學及技術服務業-技術員及助理專業人員 |          29016|                 33829|      1.165874|              4813|
+| 資訊及通訊傳播業                            |          29198|                 33944|      1.162545|              4746|
+| 金融及保險業                                |          31597|                 36569|      1.157357|              4972|
+| 專業\_科學及技術服務業-專業人員             |          33384|                 38415|      1.150701|              5031|
+| 資訊及通訊傳播業-專業人員                   |          31817|                 36545|      1.148600|              4728|
+| 金融及保險業-事務支援人員                   |          30771|                 35278|      1.146469|              4507|
+| 金融及保險業-專業人員                       |          33646|                 38542|      1.145515|              4896|
+| 資訊及通訊傳播業-事務支援人員               |          27156|                 30856|      1.136250|              3700|
+| 金融及保險業-技術員及助理專業人員           |          31688|                 35830|      1.130712|              4142|
+| 資訊及通訊傳播業-技術員及助理專業人員       |          28902|                 32354|      1.119438|              3452|
+
+1.  由RateRank表與Intrested表對照可知，儘管「金融及保險業」產業薪資較高，但薪資漲幅度卻不比另兩產業顯著，
+2.  故儘管資訊相關之產業畢業薪水並未為高於「金融及保險業」，但由於資訊相關產業，研究所畢業與大學畢業之薪資漲幅度仍有明顯之影響，且自己對資訊業相對較有興趣，故仍然會考取有關資訊類之研究所
