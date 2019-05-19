@@ -459,7 +459,7 @@ knitr::kable(head(FMoreM104,10))
 | 38  | 用水供應及污染整治業-技術員及助理專業人員           | 30378      |         99.78| M\_wage\_More\_F\_wage  |
 | 69  | 運輸及倉儲業-技藝、機械設備操作及組裝人員           | 29168      |         99.76| M\_wage\_More\_F\_wage  |
 
-1.  由FMoreM104得知於104產業中，「專業、科學及技術服務業-技藝、機械設備操作及組裝人員」女生薪資略高於男生，<br/> 而，用水供應及污染整治業-服務及銷售工作人員、不動產業-技藝、機械設備操作及組裝人員、醫療保健服務業-服務及銷售工作人員、其他服務業-專業人員，男女薪資平等沒有差異，其餘的職業男生薪資仍高於女生
+1.  由FMoreM104得知於104產業中，「專業、科學及技術服務業-技藝、機械設備操作及組裝人員」女生薪資略高於男生，而，用水供應及污染整治業-服務及銷售工作人員、不動產業-技藝、機械設備操作及組裝人員、醫療保健服務業-服務及銷售工作人員、其他服務業-專業人員，男女薪資平等沒有差異，其餘的職業男生薪資仍高於女生
 2.  推測，「專業、科學及技術服務業-技藝、機械設備操作及組裝人員」職業之刻板印象偏好男生從事，可能此產業少部分女性於此年工作較比男性認真，故薪水略高於男生
 
 -   105年
@@ -576,12 +576,11 @@ Intrested<-filter(GradAndUni,grepl("^資訊及通訊傳播業|^專業_科學及�
 
 ### 這些職業別研究所薪資與大學薪資差多少呢？
 
--   新增兩欄位比較大學與研究所以上的畢業薪資漲幅度(研究所薪資 / 大學薪資)，<br/>以及比較大學與研究所以上的畢業薪資明確之相差金額(研究所薪資 - 大學薪資)，
+-   新增一欄位(GapWithGraAndCol)比較大學與研究所以上的畢業薪資明確之相差金額(研究所薪資 - 大學薪資)，
 -   為呈現相對應的大學畢業薪資與研究所畢業薪資，故將不完整之資料篩選掉
 
 ``` r
 Intrested$GapWithGraAndCol<-Intrested$GraduateSchoolSalary-Intrested$CollegeSalary
-Intrested$IncreaseRate<-Intrested$GraduateSchoolSalary/Intrested$CollegeSalary
 
 Intrested<-Intrested[complete.cases(Intrested),]
 Intrested<-Intrested[order(Intrested$GraduateSchoolSalary,decreasing = T),]
