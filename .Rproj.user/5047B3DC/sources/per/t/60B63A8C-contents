@@ -96,9 +96,9 @@ knitr::kable( sort(table(unlist(JobType)),decreasing = T) )
 
 - 篩選各年之資料，將不完整之資料篩掉(—|…)
 - 新增一欄位(status)表男女薪資比是否有差異
- - M_wage_More_F_wage 男生薪資多於女生薪資
- - F_wage_More_M_wage 女生薪資多於男生薪資
- - F_wage_Equal_M_wage 男生薪資等於女生薪資
+    - M_wage_More_F_wage 男生薪資多於女生薪資
+    - F_wage_More_M_wage 女生薪資多於男生薪資
+    - F_wage_Equal_M_wage 男生薪資等於女生薪資
 ```{r warning=FALSE}
 #103
 edu103N3<-data.frame(Job=education103$大職業別,UniWage103=education103$`大學-薪資`,

@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1414179192",
+    "hash" : "2337373864",
     "id" : "60B63A8C",
-    "lastKnownWriteTime" : 1558258602,
-    "last_content_update" : 1558258602127,
+    "lastKnownWriteTime" : 1558283427,
+    "last_content_update" : 1558283427486,
     "path" : "~/GitHub/107bigdatacguimhw1-Lillian0114/SalaryAnalysis.Rmd",
     "project_path" : "SalaryAnalysis.Rmd",
     "properties" : {
-        "cursorPosition" : "258,16",
-        "scrollLine" : "254"
+        "cursorPosition" : "96,24",
+        "scrollLine" : "87"
     },
     "relative_order" : 5,
     "source_on_save" : false,
