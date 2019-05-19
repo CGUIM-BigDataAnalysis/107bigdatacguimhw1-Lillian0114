@@ -1,3 +1,0 @@
-"0","HigherWage<-filter(edu103to106,SalaryIncrease>1) "
-"0","HigherWage<-HigherWage[order(HigherWage$SalaryIncrease,decreasing = T),]"
-"0","knitr::kable(head(HigherWage,10)) "

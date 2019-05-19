@@ -1,3 +1,0 @@
-"0","OverFivePercent<-HigherWage[HigherWage$SalaryIncrease>1.05,]"
-"0","OverFivePercent<-OverFivePercent[complete.cases(OverFivePercent),]"
-"0","knitr::kable(OverFivePercent) "

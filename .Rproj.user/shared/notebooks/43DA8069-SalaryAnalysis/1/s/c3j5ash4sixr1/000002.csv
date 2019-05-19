@@ -1,5 +1,0 @@
-"0","JobType<-strsplit(OverFivePercent$Job,""-"")"
-"0","for(n in 1:length(JobType)){"
-"0","  JobType[n]<-JobType[[n]][1]"
-"0","}"
-"0","knitr::kable( sort(table(unlist(JobType)),decreasing = T) ) "

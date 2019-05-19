@@ -147,6 +147,7 @@ edu103to106$Salary106_College<-gsub("—","NA",edu103to106$Salary106_College)
 
 edu103to106$Salary103_College<-as.numeric(edu103to106$Salary103_College)
 edu103to106$Salary106_College<-as.numeric(edu103to106$Salary106_College)
+
 edu103to106$SalaryIncrease<-edu103to106$Salary106_College/edu103to106$Salary103_College
 ```
 
@@ -273,15 +274,276 @@ knitr::kable( sort(table(unlist(JobType)),decreasing = T) )
 
 ### 103到106年度的大學畢業薪資資料，哪些行業男生薪資比女生薪資多?
 
+#### 資料處理
+
+-   篩選各年之資料，將不完整之資料篩掉(—|…)
+-   新增一欄位(status)表男女薪資比是否有差異
+-   M\_wage\_More\_F\_wage 男生薪資多於女生薪資
+-   F\_wage\_More\_M\_wage 女生薪資多於男生薪資
+-   F\_wage\_Equal\_M\_wage 男生薪資等於女生薪資
+
 ``` r
-#這是R Code Chunk
+#103
+edu103N3<-data.frame(Job=education103$大職業別,UniWage103=education103$`大學-薪資`,
+                     FMUniwage103=education103$`大學-女/男`,stringsAsFactors = F)
+edu103N3<-edu103N3[!grepl("—|…",edu103N3$FMUniwage103),]
+edu103N3$FMUniwage103<-as.numeric(edu103N3$FMUniwage103)
+edu103N3$status<-ifelse(edu103N3$FMUniwage103<100,"M_wage_More_F_wage",
+                        ifelse(edu103N3$FMUniwage103>100,"F_wage_More_M_wage"
+                               ,"F_wage_Equal_M_wage"))
+#104
+edu104N3<-data.frame(Job=education104$大職業別,UniWage104=education104$`大學-薪資`,
+                     FMUniwage104=education104$`大學-女/男`,stringsAsFactors = F)
+edu104N3<-edu104N3[!grepl("—|…",edu104N3$FMUniwage104),]
+edu104N3$FMUniwage104<-as.numeric(edu104N3$FMUniwage104)
+edu104N3$status<-ifelse(edu104N3$FMUniwage104<100,"M_wage_More_F_wage",
+                        ifelse(edu104N3$FMUniwage104>100,"F_wage_More_M_wage"
+                               ,"F_wage_Equal_M_wage"))
+
+#105
+edu105N3<-data.frame(Job=education105$大職業別,UniWage105=education105$`大學-薪資`,
+                     FMUniwage105=education105$`大學-女/男`,stringsAsFactors = F)
+edu105N3<-edu105N3[!grepl("—|…",edu105N3$FMUniwage105),]
+edu105N3$FMUniwage105<-as.numeric(edu105N3$FMUniwage105)
+edu105N3$status<-ifelse(edu105N3$FMUniwage105<100,"M_wage_More_F_wage",
+                        ifelse(edu105N3$FMUniwage105>100,"F_wage_More_M_wage"
+                               ,"F_wage_Equal_M_wage"))
+#106
+edu106N3<-data.frame(Job=education106$大職業別,UniWage106=education106$`大學-薪資`,
+                     FMUniwage106=education106$`大學-女/男`,stringsAsFactors = F)
+edu106N3<-edu106N3[!grepl("—|…",edu106N3$FMUniwage106),]
+edu106N3$FMUniwage106<-as.numeric(edu106N3$FMUniwage106)
+edu106N3$status<-ifelse(edu106N3$FMUniwage106<100,"M_wage_More_F_wage",
+                        ifelse(edu106N3$FMUniwage106>100,"F_wage_More_M_wage"
+                               ,"F_wage_Equal_M_wage"))
 ```
+
+##### 哪些行業男生薪資比女生薪資多?
+
+-   103年
+
+``` r
+#103
+MMoreF103<-edu103N3[order(edu103N3$FMUniwage103),]
+knitr::kable(head(MMoreF103,10)) 
+```
+
+|     | Job                                                 | UniWage103 |  FMUniwage103| status                 |
+|-----|:----------------------------------------------------|:-----------|-------------:|:-----------------------|
+| 20  | 礦業及土石採取業-技藝、機械設備操作及組裝人員       | 26647      |         84.97| M\_wage\_More\_F\_wage |
+| 118 | 教育服務業-技藝、機械設備操作及組裝人員             | 24244      |         88.49| M\_wage\_More\_F\_wage |
+| 136 | 其他服務業-技術員及助理專業人員                     | 24688      |         89.36| M\_wage\_More\_F\_wage |
+| 34  | 電力及燃氣供應業-技藝、機械設備操作及組裝人員       | 27253      |         91.77| M\_wage\_More\_F\_wage |
+| 19  | 礦業及土石採取業-服務及銷售工作人員                 | 24659      |         92.57| M\_wage\_More\_F\_wage |
+| 43  | 營造業                                              | 27596      |         95.58| M\_wage\_More\_F\_wage |
+| 116 | 教育服務業-事務支援人員                             | 22334      |         95.83| M\_wage\_More\_F\_wage |
+| 113 | 教育服務業                                          | 24027      |         95.91| M\_wage\_More\_F\_wage |
+| 132 | 藝術、娛樂及休閒服務業-技藝、機械設備操作及組裝人員 | 24895      |         96.13| M\_wage\_More\_F\_wage |
+| 134 | 其他服務業                                          | 24232      |         96.21| M\_wage\_More\_F\_wage |
+
+1.  由MMoreF103得知於103產業中，於前10名中，多數有薪資差異之職位為，<br/> 大職業別的子職業別為:技藝、機械設備操作及組裝人員
+2.  推測:技藝、機械設備操作及組裝人員之工作內容需強大的勞力與力氣，故部分男生做事效率可能會比大部分女生做事效率，故薪資會比女生高
+
+-   104年
+
+``` r
+#104
+MMoreF104<-edu104N3[order(edu104N3$FMUniwage104),]
+head(MMoreF104,10)
+```
+
+    ##                                                   Job UniWage104
+    ## 34      電力及燃氣供應業-技藝、機械設備操作及組裝人員      28039
+    ## 117                     教育服務業-服務及銷售工作人員      24324
+    ## 17              礦業及土石採取業-技術員及助理專業人員      29313
+    ## 20      礦業及土石採取業-技藝、機械設備操作及組裝人員      28688
+    ## 15                                   礦業及土石採取業      30232
+    ## 137                           其他服務業-事務支援人員      25846
+    ## 48                營造業-技藝、機械設備操作及組裝人員      26650
+    ## 41  用水供應及污染整治業-技藝、機械設備操作及組裝人員      27887
+    ## 43                                             營造業      27748
+    ## 113                                        教育服務業      25162
+    ##     FMUniwage104             status
+    ## 34         91.69 M_wage_More_F_wage
+    ## 117        91.90 M_wage_More_F_wage
+    ## 17         92.42 M_wage_More_F_wage
+    ## 20         93.10 M_wage_More_F_wage
+    ## 15         95.28 M_wage_More_F_wage
+    ## 137        95.47 M_wage_More_F_wage
+    ## 48         95.64 M_wage_More_F_wage
+    ## 41         95.90 M_wage_More_F_wage
+    ## 43         96.35 M_wage_More_F_wage
+    ## 113        96.44 M_wage_More_F_wage
+
+1.  由MMoreF103得知於103產業中，於前10名中，多數有薪資差異之職位為，<br/> 大職業別的子職業別仍為:技藝、機械設備操作及組裝人員
+2.  推測原因如上述所說
+
+-   105年
+
+``` r
+#105
+MMoreF105<-edu105N3[order(edu105N3$FMUniwage105),]
+head(MMoreF105,10)
+```
+
+    ##                                               Job UniWage105 FMUniwage105
+    ## 97          不動產業-技藝、機械設備操作及組裝人員      25029        91.38
+    ## 121                       醫療保健服務業-專業人員      34708        94.98
+    ## 39              用水供應及污染整治業-事務支援人員      26984        95.04
+    ## 46                            營造業-事務支援人員      26080        95.65
+    ## 95                          不動產業-事務支援人員      25912        95.66
+    ## 43                                         營造業      28815        95.78
+    ## 44                                營造業-專業人員      32830        96.52
+    ## 83  資訊及通訊傳播業-技藝、機械設備操作及組裝人員      27702        96.64
+    ## 96                    不動產業-服務及銷售工作人員      24356        96.68
+    ## 134                                    其他服務業      25440        96.72
+    ##                 status
+    ## 97  M_wage_More_F_wage
+    ## 121 M_wage_More_F_wage
+    ## 39  M_wage_More_F_wage
+    ## 46  M_wage_More_F_wage
+    ## 95  M_wage_More_F_wage
+    ## 43  M_wage_More_F_wage
+    ## 44  M_wage_More_F_wage
+    ## 83  M_wage_More_F_wage
+    ## 96  M_wage_More_F_wage
+    ## 134 M_wage_More_F_wage
+
+1.  由MMoreF105得知於105產業中，<br/> 今年男生薪資比女生薪資高的前10名，與前兩年之呈現較不一樣，「技藝、機械設備操作及組裝人員」職業之薪資差異度大幅減少，
+2.  推測，
+
+-   106年
+
+``` r
+#106
+MMoreF106<-edu106N3[order(edu106N3$FMUniwage106),]
+head(MMoreF106,10)
+```
+
+    ##                                              Job UniWage106 FMUniwage106
+    ## 34  電力及燃氣供應業-技藝_機械設備操作及組裝人員      28717        95.51
+    ## 47                     營造業-服務及銷售工作人員      30125        95.93
+    ## 137                      其他服務業-事務支援人員      26007        96.23
+    ## 31         電力及燃氣供應業-技術員及助理專業人員      29970        96.54
+    ## 134                                   其他服務業      25517        96.57
+    ## 76      住宿及餐飲業-技藝_機械設備操作及組裝人員      26585        96.58
+    ## 43                                        營造業      28952        96.71
+    ## 114                          教育服務業-專業人員      27101        96.71
+    ## 67                     運輸及倉儲業-事務支援人員      27685        96.83
+    ## 136              其他服務業-技術員及助理專業人員      27929        96.84
+    ##                 status
+    ## 34  M_wage_More_F_wage
+    ## 47  M_wage_More_F_wage
+    ## 137 M_wage_More_F_wage
+    ## 31  M_wage_More_F_wage
+    ## 134 M_wage_More_F_wage
+    ## 76  M_wage_More_F_wage
+    ## 43  M_wage_More_F_wage
+    ## 114 M_wage_More_F_wage
+    ## 67  M_wage_More_F_wage
+    ## 136 M_wage_More_F_wage
+
+1.  由MMoreF106得知於106產業中，<br/> 今年男生薪資比女生薪資高的前10名，與去年之呈現又較不一樣，
+2.  推測，
 
 ### 哪些行業女生薪資比男生薪資多?
 
+-   103年
+
 ``` r
-#這是R Code Chunk
+#103
+FMoreM103<-edu103N3[order(edu103N3$FMUniwage103,decreasing = T),]
+knitr::kable(head(FMoreM103,10)) 
 ```
+
+|     | Job                                       | UniWage103 |  FMUniwage103| status                  |
+|-----|:------------------------------------------|:-----------|-------------:|:------------------------|
+| 17  | 礦業及土石採取業-技術員及助理專業人員     | 30375      |        100.00| F\_wage\_Equal\_M\_wage |
+| 40  | 用水供應及污染整治業-服務及銷售工作人員   | 28736      |        100.00| F\_wage\_Equal\_M\_wage |
+| 47  | 營造業-服務及銷售工作人員                 | 27164      |        100.00| F\_wage\_Equal\_M\_wage |
+| 73  | 住宿及餐飲業-技術員及助理專業人員         | 25633      |         99.97| M\_wage\_More\_F\_wage  |
+| 86  | 金融及保險業-專業人員                     | 33642      |         99.91| M\_wage\_More\_F\_wage  |
+| 59  | 批發及零售業-技術員及助理專業人員         | 27317      |         99.87| M\_wage\_More\_F\_wage  |
+| 72  | 住宿及餐飲業-專業人員                     | 28768      |         99.86| M\_wage\_More\_F\_wage  |
+| 124 | 醫療保健服務業-服務及銷售工作人員         | 25260      |         99.86| M\_wage\_More\_F\_wage  |
+| 131 | 藝術、娛樂及休閒服務業-服務及銷售工作人員 | 23419      |         99.74| M\_wage\_More\_F\_wage  |
+| 111 | 支援服務業-技藝、機械設備操作及組裝人員   | 25365      |         99.73| M\_wage\_More\_F\_wage  |
+
+1.  由FMoreM103得知於103產業中幾乎全部的產業男生薪資高於女生，除了:礦業及土石採取業-技術員及助理專業人員、用水供應及污染整治業-服務及銷售工作人員、營造業-服務及銷售工作人，男女薪資平等沒有差異
+
+-   104年
+
+``` r
+#104
+FMoreM104<-edu104N3[order(edu104N3$FMUniwage104,decreasing = T),]
+knitr::kable(head(FMoreM104,10))
+```
+
+|     | Job                                                 | UniWage104 |  FMUniwage104| status                  |
+|-----|:----------------------------------------------------|:-----------|-------------:|:------------------------|
+| 104 | 專業、科學及技術服務業-技藝、機械設備操作及組裝人員 | 27294      |        100.26| F\_wage\_More\_M\_wage  |
+| 40  | 用水供應及污染整治業-服務及銷售工作人員             | 30048      |        100.00| F\_wage\_Equal\_M\_wage |
+| 97  | 不動產業-技藝、機械設備操作及組裝人員               | 25204      |        100.00| F\_wage\_Equal\_M\_wage |
+| 124 | 醫療保健服務業-服務及銷售工作人員                   | 25106      |        100.00| F\_wage\_Equal\_M\_wage |
+| 135 | 其他服務業-專業人員                                 | 30978      |        100.00| F\_wage\_Equal\_M\_wage |
+| 73  | 住宿及餐飲業-技術員及助理專業人員                   | 26945      |         99.93| M\_wage\_More\_F\_wage  |
+| 108 | 支援服務業-技術員及助理專業人員                     | 27413      |         99.92| M\_wage\_More\_F\_wage  |
+| 75  | 住宿及餐飲業-服務及銷售工作人員                     | 23548      |         99.90| M\_wage\_More\_F\_wage  |
+| 38  | 用水供應及污染整治業-技術員及助理專業人員           | 30378      |         99.78| M\_wage\_More\_F\_wage  |
+| 69  | 運輸及倉儲業-技藝、機械設備操作及組裝人員           | 29168      |         99.76| M\_wage\_More\_F\_wage  |
+
+1.  由FMoreM104得知於104產業中<br/> 「專業、科學及技術服務業-技藝、機械設備操作及組裝人員」女生薪資略高於男生，<br/> 而，用水供應及污染整治業-服務及銷售工作人員、不動產業-技藝、機械設備操作及組裝人員、醫療保健服務業-服務及銷售工作人員、其他服務業-專業人員，男女薪資平等沒有差異，其餘的職業男生薪資仍高於女生
+2.  推測，「專業、科學及技術服務業-技藝、機械設備操作及組裝人員」職業之刻板印象偏好男生從事，可能此產業少部分女性於此年工作較比男性認真，故薪水略高於男生
+
+-   105年
+
+``` r
+#105
+FMoreM105<-edu105N3[order(edu105N3$FMUniwage105,decreasing = T),]
+knitr::kable(head(FMoreM105,10))
+```
+
+|     | Job                                         | UniWage105 |  FMUniwage105| status                  |
+|-----|:--------------------------------------------|:-----------|-------------:|:------------------------|
+| 86  | 金融及保險業-專業人員                       | 33468      |        100.11| F\_wage\_More\_M\_wage  |
+| 19  | 礦業及土石採取業-服務及銷售工作人員         | 27594      |        100.00| F\_wage\_Equal\_M\_wage |
+| 40  | 用水供應及污染整治業-服務及銷售工作人員     | 30230      |        100.00| F\_wage\_Equal\_M\_wage |
+| 117 | 教育服務業-服務及銷售工作人員               | 25502      |        100.00| F\_wage\_Equal\_M\_wage |
+| 125 | 醫療保健服務業-技藝、機械設備操作及組裝人員 | 28711      |        100.00| F\_wage\_Equal\_M\_wage |
+| 129 | 藝術、娛樂及休閒服務業-技術員及助理專業人員 | 26841      |        100.00| F\_wage\_Equal\_M\_wage |
+| 48  | 營造業-技藝、機械設備操作及組裝人員         | 26716      |         99.99| M\_wage\_More\_F\_wage  |
+| 38  | 用水供應及污染整治業-技術員及助理專業人員   | 31084      |         99.98| M\_wage\_More\_F\_wage  |
+| 76  | 住宿及餐飲業-技藝、機械設備操作及組裝人員   | 26350      |         99.96| M\_wage\_More\_F\_wage  |
+| 62  | 批發及零售業-技藝、機械設備操作及組裝人員   | 27150      |         99.90| M\_wage\_More\_F\_wage  |
+
+1.  由FMoreM105得知於105產業中，<br/> 「金融及保險業-專業人員」女生薪資略高於男生
+2.  而105年男女薪資平等之職業則比前兩年多一點，但，仍有大部分之職業男生薪資仍高於女生
+3.  推測，「金融及保險業-專業人員」女生薪資略高於男生，因此產業之薪水配給可能為業績，故，只要女生於今年之業績較好，薪水自然會變高
+
+-   106年
+
+``` r
+#106
+FMoreM106<-edu106N3[order(edu106N3$FMUniwage106,decreasing = T),]
+knitr::kable(head(FMoreM106,10))
+```
+
+|     | Job                                                 | UniWage106 |  FMUniwage106| status                  |
+|-----|:----------------------------------------------------|:-----------|-------------:|:------------------------|
+| 82  | 資訊及通訊傳播業-服務及銷售工作人員                 | 27296      |        100.33| F\_wage\_More\_M\_wage  |
+| 17  | 礦業及土石採取業-技術員及助理專業人員               | 27319      |        100.00| F\_wage\_Equal\_M\_wage |
+| 40  | 用水供應及污染整治業-服務及銷售工作人員             | 30593      |        100.00| F\_wage\_Equal\_M\_wage |
+| 83  | 資訊及通訊傳播業-技藝\_機械設備操作及組裝人員       | 27200      |        100.00| F\_wage\_Equal\_M\_wage |
+| 90  | 金融及保險業-技藝\_機械設備操作及組裝人員           | 29875      |        100.00| F\_wage\_Equal\_M\_wage |
+| 93  | 不動產業-專業人員                                   | 33632      |        100.00| F\_wage\_Equal\_M\_wage |
+| 96  | 不動產業-服務及銷售工作人員                         | 25913      |        100.00| F\_wage\_Equal\_M\_wage |
+| 97  | 不動產業-技藝\_機械設備操作及組裝人員               | 26695      |        100.00| F\_wage\_Equal\_M\_wage |
+| 104 | 專業\_科學及技術服務業-技藝\_機械設備操作及組裝人員 | 28595      |        100.00| F\_wage\_Equal\_M\_wage |
+| 75  | 住宿及餐飲業-服務及銷售工作人員                     | 25486      |         99.98| M\_wage\_More\_F\_wage  |
+
+1.  由FMoreM106得知於106產業中，<br/> 「資訊及通訊傳播業-服務及銷售工作人員」女生薪資略高於男生
+2.  而106年男女薪資平等之職業又比去年多，表示，現今產業越來越重視性別平等，
+3.  此外，於此表得知大部分薪資平等所從事的多為「服務及銷售工作人員」，<br/> 推測，女生越來越喜歡從事此類職位，且也可能是此類重視服務，故可能只要服務態度好，被服務的顧客越多，薪資越高
 
 研究所薪資差異
 --------------
@@ -298,10 +560,13 @@ knitr::kable( sort(table(unlist(JobType)),decreasing = T) )
 GradAndUni<-data.frame(Job=education106$大職業別,CollegeSalary=education106$`大學-薪資`,
                        GraduateSchoolSalary=education106$`研究所及以上-薪資`,
                        stringsAsFactors = F) 
+
 GradAndUni$CollegeSalary<-gsub("—","NA",GradAndUni$CollegeSalary)
 GradAndUni$GraduateSchoolSalary<-gsub("—","NA",GradAndUni$GraduateSchoolSalary)
+
 GradAndUni$CollegeSalary<-as.numeric(GradAndUni$CollegeSalary)
 GradAndUni$GraduateSchoolSalary<-as.numeric(GradAndUni$GraduateSchoolSalary)
+
 GradAndUni$IncreaseRate<-GradAndUni$GraduateSchoolSalary/GradAndUni$CollegeSalary
 ```
 
@@ -350,8 +615,10 @@ Intrested<-filter(GradAndUni,grepl("^資訊及通訊傳播業|^專業_科學及�
 ``` r
 Intrested$GapWithGraAndCol<-Intrested$GraduateSchoolSalary-Intrested$CollegeSalary
 Intrested$IncreaseRate<-Intrested$GraduateSchoolSalary/Intrested$CollegeSalary
+
 Intrested<-Intrested[complete.cases(Intrested),]
 Intrested<-Intrested[order(Intrested$GraduateSchoolSalary,decreasing = T),]
+
 knitr::kable(Intrested)
 ```
 
