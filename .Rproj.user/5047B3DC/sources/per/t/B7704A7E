@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1558195291364.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4221470581",
+    "id" : "B7704A7E",
+    "lastKnownWriteTime" : 1558203635,
+    "last_content_update" : 1558203635297,
+    "path" : "~/GitHub/107bigdatacguimhw1-Lillian0114/DataAnalysis.R",
+    "project_path" : "DataAnalysis.R",
+    "properties" : {
+        "cursorPosition" : "24,87",
+        "scrollLine" : "15"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
