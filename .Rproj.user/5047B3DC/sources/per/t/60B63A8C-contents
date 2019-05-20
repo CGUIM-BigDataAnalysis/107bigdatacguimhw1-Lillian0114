@@ -21,6 +21,12 @@ education104 <- read_csv("~/R/hw1/education104.csv")
 education105 <- read_csv("~/R/hw1/education105.csv")
 education106 <- read_csv("~/R/hw1/education106.csv")
 ```
+- **由於106年的部分職業命名格式於103~105不同，但為相同之職業**
+    - 如:106年職業"工業及服務業部門-技藝_機械設備操作及組裝人員"，而，103年職業"工業及服務業部門-技藝、機械設備操作及組裝人員"，其中之_符號與其他年分之職業命名方式不一樣
+    - 故將106年之職業進行資料修改    
+```{r datacleae}
+education106$大職業別 <-gsub("_","、",education106$大職業別)
+```
 
 - 取出需用到的欄位(年度、職業類別、"大學"畢業薪資)，為了讀取方便將選取欄位重新命名<br/>
  設定stringsAsFactors = F，以防止欄位以Factor之型態儲存
@@ -69,7 +75,7 @@ OverFivePercent<-OverFivePercent[complete.cases(OverFivePercent),]
 knitr::kable(OverFivePercent) 
 ```
 
-1.  從表得知薪資有明顯漲幅的職業共有41個，故一共有36個職業並未有明顯之漲幅(另外以nrow(HigherWage)-nrow(OverFivePercent)=36得知)
+1.  從表得知薪資有明顯漲幅(>1.05)的職業共有58個，故一共有46個職業並未有明顯之漲幅(另外以nrow(HigherWage)-nrow(OverFivePercent)=46得知)
 
 ### 主要的職業種別是哪些種類呢?
 - 使用strsplit取出職業別中"-" 前面的字串，了解是那些職業種類，
