@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1558525001110.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "3A7D3C71",
+    "lastKnownWriteTime" : 0,
+    "last_content_update" : 1558525001110,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "7E0A44BC",
+        "caption" : "education106",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=education106&cache_key=7E0A44BC",
+        "displayedObservations" : 140,
+        "environment" : "",
+        "object" : "education106",
+        "preview" : 0,
+        "totalObservations" : 140,
+        "variables" : 14
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

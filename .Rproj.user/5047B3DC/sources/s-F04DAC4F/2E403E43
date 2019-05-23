@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1558525002796.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "2E403E43",
+    "lastKnownWriteTime" : 30962681237012597,
+    "last_content_update" : 1558525002796,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "EC402837",
+        "caption" : "GraduateAndCollege",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=GraduateAndCollege&cache_key=EC402837",
+        "displayedObservations" : 140,
+        "environment" : "",
+        "object" : "GraduateAndCollege",
+        "preview" : 0,
+        "totalObservations" : 140,
+        "variables" : 5
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

@@ -1,21 +1,21 @@
 {
     "collab_server" : "",
     "contents" : "",
-    "created" : 1558195321843.000,
+    "created" : 1558619869979.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2532180016",
-    "id" : "60B63A8C",
-    "lastKnownWriteTime" : 1558340291,
-    "last_content_update" : 1558340291781,
+    "hash" : "3018081707",
+    "id" : "34E27AA6",
+    "lastKnownWriteTime" : 1558620831,
+    "last_content_update" : 1558620831384,
     "path" : "~/GitHub/107bigdatacguimhw1-Lillian0114/SalaryAnalysis.Rmd",
     "project_path" : "SalaryAnalysis.Rmd",
     "properties" : {
-        "cursorPosition" : "102,15",
-        "scrollLine" : "98"
+        "cursorPosition" : "295,50",
+        "scrollLine" : "286"
     },
-    "relative_order" : 5,
+    "relative_order" : 4,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_markdown"
